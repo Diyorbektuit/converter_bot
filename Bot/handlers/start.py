@@ -4,7 +4,7 @@ from aiogram.filters import Command
 
 from utils.utils import bot, checkmember
 from ..keyboards import users, channels
-from Database.Tables import User
+from Database.Tables import User, UserReferral
 
 router = Router()
 
@@ -22,10 +22,17 @@ async def check_member(call: CallbackQuery):
 
 @router.message(Command(commands=['start']))
 async def start(message: Message):
+    text_parts = message.text.split()
+
+    referral = str(text_parts[1]) if len(text_parts) > 1 else None
+
+    print(f"Referral: {referral}")  # Debug print
+
     kwargs = {
         'username': message.from_user.username,
         'full_name': message.from_user.full_name
     }
+
     user = await User.get_or_create(telegram_id=message.from_user.id, **kwargs)
 
     if user is None:
@@ -36,6 +43,18 @@ async def start(message: Message):
             text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
             reply_markup=channels.channels_buttons()
         )
+
+    if referral is not None:
+        referred_user = await User.get(referral=referral)
+        print(f"Referred User: {referred_user}")
+        if referred_user:
+            user_referral = await UserReferral.create(
+                user_id=referred_user.id,
+                offered_user_id=user.id
+            )
+            referred_user_wallet = referred_user.wallet
+            new_wallet = referred_user_wallet + user_referral.point
+            await referred_user.update(wallet=new_wallet)
 
     await message.answer(
         f"Xush kelibsiz, {message.from_user.full_name}!",

@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from .database import db_helper
 from sqlalchemy import select
+from utils.settings import SETTINGS
 
 Base = declarative_base()
 
@@ -25,13 +26,19 @@ class User(Base):
                            foreign_keys='UserReferral.offered_user_id')
 
     @classmethod
-    async def get(cls, telegram_id: int):
+    async def get(cls, telegram_id=None, referral=None):
         async_session = db_helper.get_scoped_session()
         async with async_session() as session:
-            stmt = select(cls).where(cls.telegram_id == telegram_id)
-            result = await session.execute(stmt)
-            user = result.scalars().first()
-            return user
+            if telegram_id is not None:
+                stmt = select(cls).where(cls.telegram_id == telegram_id)
+                result = await session.execute(stmt)
+                user = result.scalars().first()
+                return user
+            elif referral is not None:
+                stmt = select(cls).where(cls.referral == referral)
+                result = await session.execute(stmt)
+                user = result.scalars().first()
+                return user
 
     @classmethod
     async def get_or_create(cls, telegram_id: int, **kwargs):
@@ -55,6 +62,25 @@ class User(Base):
                 return new_user
             else:
                 return None
+
+    async def update(self, wallet=None, referral=None, fullname=None, username=None):
+        async_session = db_helper.get_scoped_session()
+        async with async_session() as session:
+            stmt = select(User).where(User.id == self.id)
+            result = await session.execute(stmt)
+            user = result.scalars().first()
+            if wallet is not None:
+                user.wallet = wallet
+            if referral is not None:
+                user.referral = referral
+            if fullname is not None:
+                user.full_name = fullname
+            if username is not None:
+                user.username = username
+
+            await session.commit()
+            await session.refresh(user)
+
 
 class UserOffer(Base):
     __tablename__ = "user_offers"
@@ -110,4 +136,28 @@ class UserReferral(Base):
     user = relationship('User', back_populates='referrals', foreign_keys=[user_id])
     offered_user = relationship('User', uselist=False, back_populates='inviter', foreign_keys=[offered_user_id])
 
+    @classmethod
+    async def create(cls, user_id, offered_user_id):
+        async_session = db_helper.get_scoped_session()
+        async with async_session() as session:
+            user_referral = cls(
+                user_id=user_id,
+                offered_user_id=offered_user_id,
+                point=SETTINGS.POINT
+            )
+
+            session.add(user_referral)
+            await session.commit()
+            await session.refresh(user_referral)
+            return user_referral
+
+    @classmethod
+    async def filter(cls, user_id):
+        async_session = db_helper.get_scoped_session()
+        async with async_session() as session:
+            stmt = select(cls).where(cls.user_id == user_id)
+            result = await session.execute(stmt)
+            referrals = result.scalars().all()
+
+            return list(referrals)
 
