@@ -26,8 +26,6 @@ async def start(message: Message):
 
     referral = str(text_parts[1]) if len(text_parts) > 1 else None
 
-    print(f"Referral: {referral}")  # Debug print
-
     kwargs = {
         'username': message.from_user.username,
         'full_name': message.from_user.full_name

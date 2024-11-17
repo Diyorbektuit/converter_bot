@@ -14,7 +14,17 @@ async def offer_first(message: Message, state: FSMContext):
     if not await checkmember(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
                                     reply_markup=channels.channels_buttons())
-    user = await User.get(telegram_id=message.from_user.id)
+    kwargs = {
+        'username': message.from_user.username,
+        'full_name': message.from_user.full_name
+    }
+
+    user = await User.get_or_create(telegram_id=message.from_user.id, kwargs=kwargs)
+    if user is None:
+        return await message.answer(
+            "Siz botda hali ro'yhatdan o'tmagansiz \n"
+            " iltimos \start tugmasini bosing"
+        )
     if user.referral is not None:
         return await message.answer(
             f"Sizning referal linkingiz:\n "
