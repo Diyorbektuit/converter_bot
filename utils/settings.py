@@ -7,9 +7,9 @@ load_dotenv()
 API_TOKEN = os.getenv('API_TOKEN')
 CHANNEL = os.getenv('CHANNEL')
 ADMIN = os.getenv('ADMIN')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 DATABASE_URL = os.getenv('DATABASE_URL')
 ECHO = os.getenv('ECHO')
+POINT = os.getenv('POINT')
 
 class Settings:
     API_TOKEN: str = API_TOKEN
@@ -17,6 +17,7 @@ class Settings:
     ADMIN : int = ADMIN
     DATABASE_URL : str = DATABASE_URL
     ECHO : bool = ECHO
+    POINT: int = POINT
 
 
 SETTINGS = Settings()

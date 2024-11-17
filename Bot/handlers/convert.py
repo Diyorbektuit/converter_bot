@@ -84,7 +84,10 @@ async def convert_to_pdf(message: Message, state: FSMContext):
     await bot.download_file(file_info.file_path, file_path)
 
     if file_path.endswith(('.ppt', '.pptx', '.doc', '.docx')):
-        new_file_path = pdf_covert(file_path)
+        response = pdf_covert(file_path)
+        new_file_path = response.get('output_pdf')
+        print(new_file_path)
+        print(f"message: {response.get('message')}")
         await message.answer("Tayyorlanmoqda ozgina kuting...")
     else:
         os.remove(file_path)
@@ -94,6 +97,7 @@ async def convert_to_pdf(message: Message, state: FSMContext):
         )
 
     new_file = types.FSInputFile(new_file_path)
+    print(f"3676643746:{new_file}")
     await message.answer_document(new_file)
     await state.clear()
 
@@ -164,4 +168,3 @@ async def convert_to_docx(message: Message, state: FSMContext):
 
     os.remove(file_path)
     os.remove(new_file_path)
-

@@ -4,7 +4,7 @@ import subprocess
 def pdf_covert(docx_path):
     output_pdf = os.path.splitext(docx_path)[0] + ".pdf"
 
-    subprocess.run([
+    message = subprocess.run([
         "libreoffice",
         "--headless",
         "--convert-to",
@@ -14,4 +14,7 @@ def pdf_covert(docx_path):
         os.path.dirname(docx_path)],
         check=True)
 
-    return output_pdf
+    return {
+        'message': message,
+        'output_pdf': output_pdf
+    }

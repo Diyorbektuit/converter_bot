@@ -1,8 +1,5 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import Session
 
 
 
@@ -12,7 +9,6 @@ load_dotenv()
 API_TOKEN = os.getenv('API_TOKEN')
 CHANNEL = os.getenv('CHANNEL')
 ADMIN = os.getenv('ADMIN')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot=bot)

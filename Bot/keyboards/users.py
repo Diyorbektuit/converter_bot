@@ -2,14 +2,16 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 
 def home_reply_keyboard():
-    # button_1 = KeyboardButton(text="🗣Referall link olish")
+    button_1 = KeyboardButton(text="🗣Referall link olish")
     button_2 = KeyboardButton(text="Taklif yuborish")
     button_3 = KeyboardButton(text="Fayllarni turini o'zgartirish")
+    button_4 = KeyboardButton(text="🗂Xizmatlar")
+    button_5 = KeyboardButton(text="💰Mening hisobim")
 
     reply = ReplyKeyboardMarkup(
         keyboard=[
-            # [button_1],
-            [button_2],
+            [button_4, button_5],
+            [button_2, button_1],
             [button_3]
         ],
         resize_keyboard=True
