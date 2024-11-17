@@ -2,6 +2,7 @@ from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from utils.utils import checkmember
+from utils.settings import SETTINGS
 from Database.Tables import User
 from ..keyboards import users, channels
 import uuid
@@ -17,7 +18,7 @@ async def offer_first(message: Message, state: FSMContext):
     if user.referral is not None:
         return await message.answer(
             f"Sizning referal linkingiz:\n "
-            f"https://t.me/converter_uzbbot/?start={user.referral}",
+            f"https://t.me/{SETTINGS.BOT_URL}/?start={user.referral}",
             reply_markup=users.home_reply_keyboard()
         )
     else:

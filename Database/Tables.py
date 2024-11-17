@@ -143,7 +143,7 @@ class UserReferral(Base):
             user_referral = cls(
                 user_id=user_id,
                 offered_user_id=offered_user_id,
-                point=SETTINGS.POINT
+                point=int(SETTINGS.POINT)
             )
 
             session.add(user_referral)
