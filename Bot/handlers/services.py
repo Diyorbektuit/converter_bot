@@ -29,6 +29,16 @@ async def converter_handler(callback: CallbackQuery, state: FSMContext):
         reply_markup=users.convert_reply_keyboard()
     )
 
+@router.callback_query(F.data == "archive")
+async def converter_handler(callback: CallbackQuery, state: FSMContext):
+    await state.clear()
+
+    await callback.message.answer(
+        f"Arxivlash va arxivdan chiqarishni quyidagi turlardan\n "
+        f"birini tanlashingiz mumkin",
+        parse_mode='HTML',
+        reply_markup=users.archive_keyboard()
+    )
 
 @router.callback_query(F.data == "other")
 async def other_handler(callback: CallbackQuery, state: FSMContext):
