@@ -29,5 +29,5 @@ async def handle_file(message: Message, state: FSMContext):
         return await message.answer("Asosiy sahifa",
                                     reply_markup=home_reply_keyboard())
 
-    await message.answer(f"Bu funksiya tez orada ishga tushadi")
+    await message.answer(f"Bu funksiya tez orada ishga tushadi", reply_markup=archive_keyboard())
 

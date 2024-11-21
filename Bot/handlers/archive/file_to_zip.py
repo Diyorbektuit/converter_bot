@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile
-
+from utils.settings import SETTINGS
 from utils.utils import bot
 from Bot.keyboards.users import archive_finish
 from Bot.states.archive import ArchiveState
@@ -11,7 +11,7 @@ import os
 from datetime import datetime
 
 user_files = {}
-base_dir = "/home/diyorbek/PycharmProjects/converter_bot/downloads"
+base_dir = SETTINGS.BASE_DIR
 router = Router()
 
 # zip
