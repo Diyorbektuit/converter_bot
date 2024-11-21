@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from .database import db_helper
 from sqlalchemy import select
 from utils.settings import SETTINGS
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -24,6 +25,8 @@ class User(Base):
     inviter = relationship('UserReferral',
                            back_populates='offered_user',
                            foreign_keys='UserReferral.offered_user_id')
+    role = Column(String(123), default="user")
+    created_at = Column(DateTime, default=datetime.utcnow)
 
     @classmethod
     async def get(cls, telegram_id=None, referral=None):
@@ -63,7 +66,21 @@ class User(Base):
             else:
                 return None
 
-    async def update(self, wallet=None, referral=None, fullname=None, username=None):
+    @classmethod
+    async def all_users(cls, start_date: datetime = None, end_date: datetime = None):
+        async_session = db_helper.get_scoped_session()
+        async with async_session() as session:
+            if start_date is not None and end_date is not None:
+                stmt = select(cls).where(cls.created_at >= start_date, cls.created_at <= end_date)
+                result = await session.execute(stmt)
+                users = result.scalars().all()
+                return users
+            stmt = select(cls)
+            result = await session.execute(stmt)
+            users = result.scalars().all()
+            return users
+
+    async def update(self, wallet=None, referral=None, fullname=None, username=None, role=None):
         async_session = db_helper.get_scoped_session()
         async with async_session() as session:
             stmt = select(User).where(User.id == self.id)
@@ -77,10 +94,11 @@ class User(Base):
                 user.full_name = fullname
             if username is not None:
                 user.username = username
+            if role is not None:
+                user.role = role
 
             await session.commit()
             await session.refresh(user)
-
 
 class UserOffer(Base):
     __tablename__ = "user_offers"

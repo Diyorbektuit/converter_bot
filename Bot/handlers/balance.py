@@ -25,5 +25,5 @@ async def balance(message: Message, state: FSMContext):
     await message.answer(
         f"Sizning hisobingizda <b>{user.wallet}</b> so'm bor\n "
         f"<b> {len(referrals)} </b> ta odam taklif qilgansiz",
-        parse_mode='HTML'  # 'html' ni 'HTML' ga o'zgartirdik
+        parse_mode='HTML'
     )

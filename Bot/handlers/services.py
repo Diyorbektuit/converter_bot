@@ -7,7 +7,7 @@ from ..states.offer import Offer
 router = Router()
 
 @router.message(lambda message: message.text == "🗂Xizmatlar")
-async def services(message: Message, state: FSMContext):
+async def services_handler(message: Message, state: FSMContext):
     await state.clear()
 
     await message.answer(f"✅ Bizning xizmatlarimizni tanlaganingizdan xursandmiz!\n"
@@ -17,7 +17,7 @@ async def services(message: Message, state: FSMContext):
     )
 
 @router.callback_query(F.data == "converter")
-async def converter(callback: CallbackQuery, state: FSMContext):
+async def converter_handler(callback: CallbackQuery, state: FSMContext):
     await state.clear()
 
     await callback.answer(
@@ -31,7 +31,7 @@ async def converter(callback: CallbackQuery, state: FSMContext):
 
 
 @router.callback_query(F.data == "other")
-async def other(callback: CallbackQuery, state: FSMContext):
+async def other_handler(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Offer.message)
 
     return await callback.message.answer(

@@ -13,7 +13,7 @@ ADMIN = os.getenv('ADMIN')
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot=bot)
 
-async def checkmember(telegram_id):
+async def check_member(telegram_id: int) -> bool:
     chat_username = f"@{CHANNEL}"
     try:
         member = await bot.get_chat_member(chat_username, telegram_id)

@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from ..states.offer import Offer
-from utils.utils import bot, checkmember, ADMIN
+from utils.utils import bot, check_member, ADMIN
 from Database.Tables import UserOffer, User
 from ..keyboards import users, channels, offer
 
@@ -11,7 +11,7 @@ router = Router()
 
 @router.message(lambda message: message.text == 'Taklif yuborish')
 async def offer_first(message: Message, state: FSMContext):
-    if not await checkmember(message.from_user.id):
+    if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
                                     reply_markup=channels.channels_buttons())
     await state.clear()
@@ -23,7 +23,7 @@ async def offer_first(message: Message, state: FSMContext):
 
 @router.message(Offer.message, lambda message: message.voice or None)
 async def audio_offer(message: Message, state: FSMContext):
-    if not await checkmember(message.from_user.id):
+    if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
                                     reply_markup=channels.channels_buttons())
     if message.text == "⬅️Orqaga":
@@ -54,7 +54,7 @@ async def audio_offer(message: Message, state: FSMContext):
 
 @router.message(Offer.message, lambda message: message.text or None)
 async def text_offer(message: Message, state: FSMContext):
-    if not await checkmember(message.from_user.id):
+    if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
                                     reply_markup=channels.channels_buttons())
     if message.text == "⬅️Orqaga":
@@ -66,7 +66,7 @@ async def text_offer(message: Message, state: FSMContext):
     )
 
     if user is not None:
-        new_user = await UserOffer.create(
+        await UserOffer.create(
             user=user,
             file=message.text
         )
