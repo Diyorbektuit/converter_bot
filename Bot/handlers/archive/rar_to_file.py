@@ -1,7 +1,6 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from utils.utils import bot
 from Bot.keyboards.users import archive_finish
 from Bot.states.archive import ArchiveState
 from Bot.keyboards.users import home_reply_keyboard, archive_keyboard
@@ -23,12 +22,12 @@ async def convert_zip_handler(message: Message, state: FSMContext):
 async def handle_file(message: Message, state: FSMContext):
     if message.text == "⬅️Orqaga":
         await state.clear()
-        return await message.answer("🔄Fayllarni arxivlash va arxivdan chiqarish", reply_markup=archive_keyboard())
+        return await message.answer("🔄Fayllarni arxivlash va arxivdan chiqarish",
+                                    reply_markup=archive_keyboard())
     elif message.text == "Asosiy sahifa":
         await state.clear()
         return await message.answer("Asosiy sahifa",
                                     reply_markup=home_reply_keyboard())
 
-
-    await message.answer(f"Fayl qabul qilindi")
+    await message.answer(f"Bu funksiya tez orada ishga tushadi")
 
