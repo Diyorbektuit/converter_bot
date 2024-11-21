@@ -11,11 +11,11 @@ router = Router()
 # rar
 @router.message(lambda message: message.text == "rar arxivdan chiqarish")
 async def convert_zip_handler(message: Message, state: FSMContext):
-    await state.set_state(ArchiveState.rar_to_file)
+    await state.clear()
 
     await message.answer(
-        text="arxivlamoqchi bolgan fayllaringizni yuboring",
-        reply_markup=archive_finish()
+        text="Tez orada bu funksiya ishga tushadi",
+        reply_markup=archive_keyboard()
     )
 
 @router.message(ArchiveState.rar_to_file)
