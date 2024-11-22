@@ -10,7 +10,7 @@ from Bot.states.convert import ConvertState
 
 router = Router()
 
-@router.message(lambda message: message.text == "pdf ga aylantirish")
+@router.message(lambda message: message.text == "📄 Faylni PDF formatiga o'zgartirish")
 async def convert_pdf_handler(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

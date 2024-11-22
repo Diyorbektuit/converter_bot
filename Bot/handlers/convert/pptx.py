@@ -10,7 +10,7 @@ from Bot.states.convert import ConvertState
 
 router = Router()
 
-@router.message(lambda message: message.text == "pptx ga aylantirish")
+@router.message(lambda message: message.text == "📊 Faylni PPTX formatiga o'zgartirish")
 async def convert_pptx_handler(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

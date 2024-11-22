@@ -6,7 +6,8 @@ from Database.Tables import User, UserReferral
 
 router = Router()
 
-@router.message(lambda message: message.text == "💰Mening hisobim")
+from aiogram import Router
+@router.message(lambda message: message.text == "💰 Hisobingizni tekshirish")
 async def balance(message: Message, state: FSMContext):
     await state.clear()
     kwargs = {

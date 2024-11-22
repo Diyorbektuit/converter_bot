@@ -9,12 +9,12 @@ from Bot.states.convert import ConvertState
 
 router = Router()
 
-@router.message(lambda message: message.text == "docx ga aylantirish")
+@router.message(lambda message: message.text == "📃 Faylni DOCX formatiga o'zgartirish")
 async def convert_docx_handler(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
                                     reply_markup=channels.channels_buttons())
-    if message.text == "⬅️Orqaga":
+    if message.text == "⬅️ Orqaga qaytish":
         await state.clear()
         return await message.answer("Asosiy sahifa", reply_markup=users.home_reply_keyboard())
 
@@ -26,7 +26,7 @@ async def convert_docx_handler(message: Message, state: FSMContext):
 
 @router.message(ConvertState.docx, lambda message: message)
 async def convert_to_docx(message: Message, state: FSMContext):
-    if message.text == "⬅️Orqaga":
+    if message.text == "⬅️ Orqaga qaytish":
         await state.clear()
         return await message.answer("Asosiy sahifa", reply_markup=users.home_reply_keyboard())
 

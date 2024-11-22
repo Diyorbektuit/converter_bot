@@ -9,7 +9,7 @@ from ..keyboards import users, channels, offer
 
 router = Router()
 
-@router.message(lambda message: message.text == 'Taklif yuborish')
+@router.message(lambda message: message.text == '✉️ Taklif va fikr bildirish')
 async def offer_first(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

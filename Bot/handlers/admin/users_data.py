@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 router = Router()
 
-@router.message(lambda message: message.text == "userlar ma'lumoti")
+@router.message(lambda message: message.text == "👥 Foydalanuvchilar haqida ma'lumot")
 async def users_data_handler(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

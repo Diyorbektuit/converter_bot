@@ -9,7 +9,7 @@ from Bot.states.sen_message_users import MessageState
 
 router = Router()
 
-@router.message(lambda message: message.text == "hamma userlarga xabar jo'natish")
+@router.message(lambda message: message.text == "📨 Hamma foydalanuvchilarga xabar yuborish")
 async def message_to_users(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

@@ -15,7 +15,7 @@ base_dir = SETTINGS.BASE_DIR
 router = Router()
 
 # zip
-@router.message(lambda message: message.text == "zip ko'rinishida arxivlash")
+@router.message(lambda message: message.text == "📦 ZIP formatida arxivlash")
 async def convert_zip_handler(message: Message, state: FSMContext):
     user_id = message.from_user.id
     await state.set_state(ArchiveState.file_to_zip)
@@ -33,15 +33,15 @@ async def convert_zip_handler(message: Message, state: FSMContext):
 @router.message(ArchiveState.file_to_zip)
 async def handle_file(message: Message, state: FSMContext):
     user_id = message.from_user.id
-    if message.text == "⬅️Orqaga":
+    if message.text == "⬅️ Orqaga qaytish":
         await state.clear()
         return await message.answer("🔄Fayllarni arxivlash va arxivdan chiqarish",
                                     reply_markup=archive_keyboard())
-    elif message.text == "Asosiy sahifa":
+    elif message.text == "🏠 Asosiy sahifaga qaytish":
         await state.clear()
         return await message.answer("Asosiy sahifa",
                                     reply_markup=home_reply_keyboard())
-    elif message.text == "yakunlash":
+    elif message.text == "✅ Arxivlashni yakunlash":
         await state.clear()
 
         if user_id not in user_files.keys():

@@ -9,7 +9,7 @@ import uuid
 
 router = Router()
 
-@router.message(lambda message: message.text == "🗣Referall link olish")
+@router.message(lambda message: message.text == "🔗 Referal havolani olish")
 async def offer_first(message: Message, state: FSMContext):
     if not await check_member(message.from_user.id):
         return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",

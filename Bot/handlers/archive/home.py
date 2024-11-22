@@ -6,7 +6,7 @@ from Bot.keyboards.users import archive_keyboard
 
 router = Router()
 
-@router.message(lambda message: message.text == "🔄Fayllarni arxivlash va arxivdan chiqarish")
+@router.message(lambda message: message.text == "📦 Fayllarni arxivlash yoki arxivdan chiqarish")
 async def convert_archive(message: Message, state: FSMContext):
     await state.clear()
 

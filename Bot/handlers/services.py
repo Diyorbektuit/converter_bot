@@ -6,7 +6,7 @@ from ..states.offer import Offer
 
 router = Router()
 
-@router.message(lambda message: message.text == "🗂Xizmatlar")
+@router.message(lambda message: message.text == "🔧 Xizmatlar ro'yxati")
 async def services_handler(message: Message, state: FSMContext):
     await state.clear()
 
