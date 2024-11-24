@@ -1,20 +1,11 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from ..keyboards import inline, users, offer
-from ..states.offer import Offer
+from aiogram.types import CallbackQuery
+from Bot.keyboards import users, offer
+from Bot.states.user import Offer
 
 router = Router()
 
-@router.message(lambda message: message.text == "🔧 Xizmatlar ro'yxati")
-async def services_handler(message: Message, state: FSMContext):
-    await state.clear()
-
-    await message.answer(f"✅ Bizning xizmatlarimizni tanlaganingizdan xursandmiz!\n"
-                                f"👇 Quydagi Ijtimoiy tarmoqlardan birini tanlang.",
-        reply_markup=inline.service_buttons(),
-        parse_mode='HTML'
-    )
 
 @router.callback_query(F.data == "converter")
 async def converter_handler(callback: CallbackQuery, state: FSMContext):

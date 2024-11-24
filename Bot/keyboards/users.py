@@ -36,7 +36,7 @@ def convert_reply_keyboard() -> ReplyKeyboardMarkup:
     button_1 = KeyboardButton(text="📄 Faylni PDF formatiga o'zgartirish")
     button_2 = KeyboardButton(text="📊 Faylni PPTX formatiga o'zgartirish")
     button_3 = KeyboardButton(text="📃 Faylni DOCX formatiga o'zgartirish")
-    button_4 = KeyboardButton(text="⬅️ Asosiy sahifaga qaytish")
+    button_4 = KeyboardButton(text="🏠 Asosiy sahifaga qaytish")
 
     reply = ReplyKeyboardMarkup(
         keyboard=[
@@ -53,7 +53,7 @@ def archive_keyboard() -> ReplyKeyboardMarkup:
     button_2 = KeyboardButton(text="📦 RAR formatida arxivlash")
     button_3 = KeyboardButton(text="📂 ZIP arxivdan chiqarish")
     button_4 = KeyboardButton(text="📂 RAR arxivdan chiqarish")
-    button_5 = KeyboardButton(text="⬅️ Orqaga qaytish")
+    button_5 = KeyboardButton(text="🏠 Asosiy sahifaga qaytish")
 
     reply = ReplyKeyboardMarkup(
         keyboard=[

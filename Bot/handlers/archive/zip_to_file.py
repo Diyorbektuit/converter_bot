@@ -1,11 +1,7 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-
-from utils.utils import bot
-from utils.archive import unzip_files
-from Bot.keyboards.users import archive_finish
-from Bot.states.archive import ArchiveState
+from Bot.states.user import ArchiveState
 from Bot.keyboards.users import home_reply_keyboard, archive_keyboard
 
 router = Router()

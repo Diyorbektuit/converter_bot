@@ -1,8 +1,7 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from Bot.keyboards.users import archive_finish
-from Bot.states.archive import ArchiveState
+from Bot.states.user import ArchiveState
 from Bot.keyboards.users import home_reply_keyboard, archive_keyboard
 
 

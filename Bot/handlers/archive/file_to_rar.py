@@ -4,7 +4,7 @@ from aiogram.types import Message, FSInputFile
 from utils.settings import SETTINGS
 from utils.utils import bot
 from Bot.keyboards.users import archive_finish
-from Bot.states.archive import ArchiveState
+from Bot.states.user import ArchiveState
 from Bot.keyboards.users import home_reply_keyboard, archive_keyboard
 from utils.archive import create_rar_archive
 import os
@@ -27,7 +27,7 @@ async def convert_zip_handler(message: Message, state: FSMContext):
         })
 
     await message.answer(
-        text="arxivlamoqchi bolgan fayllaringizni yuboring",
+        text="arxivlash uchun rasm, vidio va har qanday turdagi hujjatlarni yuborishingiz mumkin",
         reply_markup=archive_finish()
     )
 
@@ -44,7 +44,6 @@ async def handle_file(message: Message, state: FSMContext):
         return await message.answer("Asosiy sahifa",
                                     reply_markup=home_reply_keyboard())
     elif message.text == "✅ Arxivlashni yakunlash":
-        await state.clear()
 
         if user_id not in user_files.keys():
             await message.answer("Siz hech qanday fayl yubormadingiz.")
@@ -69,7 +68,6 @@ async def handle_file(message: Message, state: FSMContext):
             user_files.update({
                 user_id: []
             })
-            await state.clear()
             return await message.answer("Xatolik yuz berdi boshqattan urinib ko'ring /start")
         send_file = FSInputFile(path=rar_path)
         await message.answer_document(send_file)
@@ -81,6 +79,7 @@ async def handle_file(message: Message, state: FSMContext):
                 user_id: []
             }
         )
+        await state.clear()
         return await message.answer("Bizning xizmatdan foydalanganingiz uchun rahmat 😊",
                                     reply_markup=archive_keyboard())
 
@@ -121,5 +120,8 @@ async def handle_file(message: Message, state: FSMContext):
             user_files[user_id] = []
         user_files[message.from_user.id].append({"file_path": file_path})
         await message.answer(f"Video qabul qilindi")
-
+    else:
+        return await message.answer(
+            text="Bunday turdagi fayl qabul qilinmaydi"
+        )
 

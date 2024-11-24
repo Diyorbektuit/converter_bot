@@ -1,19 +1,15 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from utils.utils import check_member
 from utils.settings import SETTINGS
 from Database.Tables import User
-from ..keyboards import users, channels
+from Bot.keyboards import users, channels
 import uuid
 
 router = Router()
 
 @router.message(lambda message: message.text == "🔗 Referal havolani olish")
 async def offer_first(message: Message, state: FSMContext):
-    if not await check_member(message.from_user.id):
-        return await message.answer(text="Botdan foydalanish uchun quyidagi kanalga a'zo boling",
-                                    reply_markup=channels.channels_buttons())
     kwargs = {
         'username': message.from_user.username,
         'full_name': message.from_user.full_name
