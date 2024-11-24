@@ -13,7 +13,7 @@ router = Router()
 async def convert(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(
-        "Qaysi turdan qaysi turga o'tmoqchi ekaningizni tanlang",
+        "Qaysi turdan qaysi turga o'tmoqchi ekaningizni tanlang:",
         reply_markup=users.convert_reply_keyboard()
     )
 
@@ -23,8 +23,7 @@ async def convert_archive(message: Message, state: FSMContext):
     await state.clear()
 
     await message.answer(
-        f"Arxivlash va arxivdan chiqarishni quyidagi turlardan\n "
-        f"birini tanlashingiz mumkin",
+        "Arxivlash yoki arxivdan chiqarish uchun quyidagi turlardan birini tanlashingiz mumkin:",
         parse_mode='HTML' ,
         reply_markup=archive_keyboard()
     )
@@ -34,7 +33,7 @@ async def services_handler(message: Message, state: FSMContext):
     await state.clear()
 
     await message.answer(f"✅ Bizning xizmatlarimizni tanlaganingizdan xursandmiz!\n"
-                                f"👇 Quydagi Ijtimoiy tarmoqlardan birini tanlang.",
+                                f"👇 Quydagi xizmatlardan birini tanlang.",
         reply_markup=service_buttons(),
         parse_mode='HTML'
     )

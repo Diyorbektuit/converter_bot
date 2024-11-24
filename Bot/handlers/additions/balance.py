@@ -17,13 +17,12 @@ async def balance(message: Message, state: FSMContext):
     user = await User.get_or_create(telegram_id=message.from_user.id, kwargs=kwargs)
     if user is None:
         return await message.answer(
-            "Siz botda hali ro'yhatdan o'tmagansiz \n"
-            " iltimos \start tugmasini bosing"
+            "Siz botda hali ro'yhatdan o'tmagansiz. Iltimos, /start tugmasini bosing."
         )
     referrals = await UserReferral.filter(user_id=user.id)
 
     await message.answer(
-        f"Sizning hisobingizda <b>{user.wallet}</b> so'm bor\n "
-        f"<b> {len(referrals)} </b> ta odam taklif qilgansiz",
+        f"Sizning hisobingizda <b>{user.wallet}</b> so'm bor\n"
+        f"<b>{len(referrals)}</b> ta odam taklif qilgansiz",
         parse_mode='HTML'
     )

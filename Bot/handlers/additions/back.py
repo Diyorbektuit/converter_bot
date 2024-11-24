@@ -5,7 +5,7 @@ from aiogram import Router
 
 router = Router()
 
-@router.message(lambda message: message.text == '🏠 Asosiy sahifaga qaytish', )
+@router.message(lambda message: message.text == '🏠 Asosiy sahifaga qaytish')
 async def back(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(

@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 
 from utils.utils import bot
-from Bot.keyboards import users, channels
+from Bot.keyboards import users
 from Database.Tables import User, UserReferral
 
 router = Router()
@@ -30,11 +30,12 @@ async def start_handler(message: Message):
     user = await User.get_or_create(telegram_id=message.from_user.id, **kwargs)
 
     if user is None:
-        return await message.answer(text="Siz bu botdan foydalana olmaysiz")
+        return await message.answer(
+            text="Uzr, siz ushbu botdan foydalanishga ruxsat olmadingiz. Qo‘llab-quvvatlash xizmatiga murojaat qiling.")
 
     if user.role == "admin":
         return await message.answer(
-            f"Xush kelibsiz admin, {message.from_user.full_name}!",
+            f"Assalomu alaykum, hurmatli admin {message.from_user.full_name}! Ishlaringizga omad! 👋",
             reply_markup=users.home_reply_keyboard_admin()
         )
 
@@ -50,7 +51,7 @@ async def start_handler(message: Message):
             await referred_user.update(wallet=new_wallet)
 
     await message.answer(
-        f"Xush kelibsiz, {message.from_user.full_name}!",
+         f"Xush kelibsiz, {message.from_user.full_name}! 😊 Bizning xizmatimizdan foydalanishingizdan xursandmiz.",
         reply_markup=users.home_reply_keyboard()
     )
 

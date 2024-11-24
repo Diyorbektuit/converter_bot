@@ -19,18 +19,25 @@ async def audio_offer(message: Message, state: FSMContext):
     )
 
     if user is not None:
-        new_user = await UserOffer.create(
+         await UserOffer.create(
             user=user,
             file=message.voice.file_id
         )
 
-    response = (f"Yangi taklif keldi \n"
-                f"Taklif egasi idsi: {message.chat.id} \n"
-                f"Xabar kelgan sana: {message.date} \n"
-                f"Foydalanuvchi ismi: {message.from_user.full_name} \n"
-                f"Foydalanuvchi username: @{message.from_user.username}\n")
+    response = (
+        "📥 *Yangi taklif keldi:*\n\n"
+        f"👤 *Foydalanuvchi:* {message.from_user.full_name}\n"
+        f"🆔 *Telegram ID:* {message.chat.id}\n"
+        f"📅 *Xabar kelgan sana:* {message.date.strftime('%Y-%m-%d %H:%M:%S')}\n"
+        f"🔗 *Username:* @{message.from_user.username or 'No username'}"
+    )
 
-    await message.reply("Taklifingiz yuborildi,taklifingiz uchun rahmat😊", reply_markup=users.home_reply_keyboard())
+    await message.reply(
+        "✅ *Taklifingiz qabul qilindi!*\nTaklifingiz uchun rahmat 😊",
+        reply_markup=users.home_reply_keyboard(),
+        parse_mode="Markdown",
+    )
+
     await state.clear()
     await bot.send_voice(chat_id=int(ADMIN), voice=message.voice.file_id, caption=response)
 
@@ -47,16 +54,23 @@ async def text_offer(message: Message, state: FSMContext):
     if user is not None:
         await UserOffer.create(
             user=user,
-            file=message.text
+            text=message.text
         )
 
-    response = (f"Yangi taklif keldi \n "
-                f"taklif egasi idsi : {message.chat.id} \n "
-                f"Xabar kelgan sana {message.date} \n "
-                f"foydalnuvchi ismi: {message.from_user.full_name} \n "
-                f"foydalanuvchi username: @{message.from_user.username}\n"
-                f"Takif: {message.text}")
+    response = (
+        "📥 *Yangi taklif keldi:*\n\n"
+        f"👤 *Foydalanuvchi:* {message.from_user.full_name}\n"
+        f"🆔 *Telegram ID:* {message.chat.id}\n"
+        f"📅 *Xabar kelgan sana:* {message.date.strftime('%Y-%m-%d %H:%M:%S')}\n"
+        f"🔗 *Username:* @{message.from_user.username or 'No username'}\n\n"
+        f"📝 *Taklif matni:* {message.text}"
+    )
 
-    await message.reply("Taklifingiz yuborildi,taklifingiz uchun rahmat😊", reply_markup=users.home_reply_keyboard())
+    await message.reply(
+        "✅ *Taklifingiz qabul qilindi!*\nTaklifingiz uchun rahmat 😊",
+        reply_markup=users.home_reply_keyboard(),
+        parse_mode="Markdown",
+    )
+
     await state.clear()
     await bot.send_message(chat_id=int(ADMIN), text=response)

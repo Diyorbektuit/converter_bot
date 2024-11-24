@@ -6,43 +6,44 @@ from Bot.states.user import Offer
 
 router = Router()
 
-
 @router.callback_query(F.data == "converter")
 async def converter_handler(callback: CallbackQuery, state: FSMContext):
     await state.clear()
 
     await callback.answer(
-        "Qaysi turdan qaysi turga o'tmoqchi ekaningizni tanlang👇",
+        "Iltimos, qaysi turdan qaysi turga o‘zgartirmoqchi ekanligingizni tanlang👇",
     )
 
     return await callback.message.answer(
-        text="Fayllarni turini o'zgartirish",
+        text="🔄 Fayllar turini o‘zgartirish uchun kerakli opsiyani tanlang:",
         reply_markup=users.convert_reply_keyboard()
     )
 
+
 @router.callback_query(F.data == "archive")
-async def converter_handler(callback: CallbackQuery, state: FSMContext):
+async def archive_handler(callback: CallbackQuery, state: FSMContext):
     await state.clear()
 
-    await callback.message.answer(
-        f"Arxivlash va arxivdan chiqarishni quyidagi turlardan\n "
-        f"birini tanlashingiz mumkin",
+    return await callback.message.answer(
+        text=(
+            "📦 Arxivlash va arxivdan chiqarish xizmati uchun quyidagi formatlardan birini tanlang:"
+        ),
         parse_mode='HTML',
         reply_markup=users.archive_keyboard()
     )
+
 
 @router.callback_query(F.data == "other")
 async def other_handler(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Offer.message)
 
     return await callback.message.answer(
-        text="Hali Boshqa xizmat turlari botimizga qoshilmadi \n"
-             "lekin siz o'z taklifingizni qoldirishingiz mumkin \n"
-             "biz albatta uni korib chiqib sizga kerakli xizmat \n"
-             "turini botimizga qoshishga harakat qilamiz \n\n"
-             "quyida Taklifningizni oddiy yozuv yoki \n"
-             "ovozli xabar ko'rinishida yuborishingiz mumkin ",
+        text=(
+            "📌 Hozircha boshqa xizmat turlari botimizga qo‘shilmagan.\n\n"
+            "😊 Ammo, siz o‘z taklifingizni yuborishingiz mumkin! Biz uni ko‘rib chiqamiz "
+            "va sizga kerakli xizmat turini botimizga qo‘shishga harakat qilamiz.\n\n"
+            "📨 Taklifingizni oddiy yozuv yoki ovozli xabar shaklida yuborishingiz mumkin."
+        ),
         parse_mode='HTML',
         reply_markup=offer.offer_reply_keyboard()
     )
-
