@@ -45,6 +45,7 @@ async def convert_to_docx(message: Message, state: FSMContext):
 
         os.remove(file_path)
         os.remove(new_file_path)
+        return
     return await message.answer(
         text="siz faqat pdf turdagi fayl yuborishingiz kerak"
     )

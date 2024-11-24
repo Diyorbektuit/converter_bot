@@ -44,6 +44,7 @@ async def convert_to_pptx(message: Message, state: FSMContext):
 
         os.remove(file_path)
         os.remove(new_file_path)
+        return
     return await message.answer(
         "Siz faqat pdf turdagi fayl yubora olasiz"
     )

@@ -49,6 +49,7 @@ async def convert_to_pdf(message: Message):
         await message.answer_document(new_file)
         os.remove(file_path)
         os.remove(new_file_path)
+        return
     return await message.answer(
         text="Siz faqat ppt, pptx, doc, docx turidagi fayl yubora olasiz"
     )
