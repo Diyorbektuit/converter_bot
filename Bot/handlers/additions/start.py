@@ -32,11 +32,11 @@ async def start_handler(message: Message):
     if user is None:
         return await message.answer(text="Siz bu botdan foydalana olmaysiz")
 
-    # if user.role == "admin":
-    #     return await message.answer(
-    #         f"Xush kelibsiz admin, {message.from_user.full_name}!",
-    #         reply_markup=users.home_reply_keyboard_admin()
-    #     )
+    if user.role == "admin":
+        return await message.answer(
+            f"Xush kelibsiz admin, {message.from_user.full_name}!",
+            reply_markup=users.home_reply_keyboard_admin()
+        )
 
     if referral is not None:
         referred_user = await User.get(referral=referral)
