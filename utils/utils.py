@@ -18,7 +18,7 @@ ADMIN = os.getenv('ADMIN')
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot=bot)
 
-dp.message.middleware(ChannelSubscriptionMiddleware("@diyorbeks_docx", bot))
+dp.message.middleware(ChannelSubscriptionMiddleware("@foydali_tgbotlar", bot))
 
 async def send_message_to_all_users(bot_: Bot, text: str) -> dict:
     users = await User.all_users()
