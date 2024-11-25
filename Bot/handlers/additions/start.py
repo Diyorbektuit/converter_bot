@@ -12,7 +12,7 @@ router = Router()
 @router.callback_query(F.data == "check")
 async def check_member_handler(call: CallbackQuery):
     await bot.send_message(chat_id=call.message.chat.id,
-                           text="Marhamat quyidagi tugmalardan birini bosing",
+                           text="Bizning xizmatimizni tanlaganingiz uchun rahmat😊",
                            reply_markup=users.home_reply_keyboard())
 
 
